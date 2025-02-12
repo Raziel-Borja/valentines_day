@@ -8,6 +8,7 @@ import Confetti from 'react-confetti';
 
 export default function ValentinePage() {
   const [showConfetti, setShowConfetti] = useState(false); // Estado para controlar el confeti
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 }); // Estado para el tamaño de la ventana
 
   // Efecto para reproducir música automáticamente al cargar la página
   useEffect(() => {
@@ -17,6 +18,20 @@ export default function ValentinePage() {
         // Maneja errores de reproducción automática (por políticas del navegador)
         console.log('La reproducción automática fue bloqueada.');
       });
+    }
+  }, []);
+
+  // Efecto para obtener el tamaño de la ventana solo en el cliente
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+
+      const handleResize = () => {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      };
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     }
   }, []);
 
@@ -50,10 +65,10 @@ export default function ValentinePage() {
       <Hearts />
 
       {/* Confeti */}
-      {showConfetti && (
+      {showConfetti && typeof window !== 'undefined' && (
         <Confetti
-          width={window.innerWidth}
-          height={window.innerHeight}
+          width={windowSize.width}
+          height={windowSize.height}
           recycle={false} // El confeti se detiene después de caer
           numberOfPieces={500} // Cantidad de confeti
           gravity={0.2} // Velocidad de caída

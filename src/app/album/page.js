@@ -50,10 +50,11 @@ export default function AlbumPage() {
             <div className="relative w-64 h-64">
               <Image
                 src={photo.src}
-                layout="fill"
-                objectFit="cover"
+                fill // Reemplaza layout="fill" por fill
+                style={{ objectFit: 'cover' }} // Reemplaza objectFit="cover"
                 className="rounded-lg"
                 alt={photo.alt}
+                priority={index < 3} // Prioriza la carga de las primeras imágenes
               />
             </div>
             <p className="text-center text-gray-700 mt-2 text-xl">{photo.alt}</p>

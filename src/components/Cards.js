@@ -10,7 +10,9 @@ const PhotoCard = ({ src, alt, description }) => {
           src={src}
           alt={alt}
           fill
-          className="object-cover rounded-lg"
+          style={{ objectFit: 'cover' }} // Usa style para objectFit
+          className="rounded-lg"
+          priority={src === '/foto_1.jpeg'} // Prioriza la carga de la primera imagen
         />
       </div>
       <p className="mt-4 text-gray-700">{description}</p>
